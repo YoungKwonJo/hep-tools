@@ -35,7 +35,7 @@ for aa in ds:
      ddd+= args[3]+" run_ntupleMakerRD_cfg.py "
    else :
      ddd+= args[3]+" run_ntupleMaker_cfg.py "
-   #ddd+= args[4]+" /store/user/youngjo/Cattools/test" #+aa['name']
+   ddd+= args[4]+" /store/user/youngjo/Cattools/test" #+aa['name']
 
    print ddd
    os.system(ddd)

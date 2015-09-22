@@ -132,7 +132,7 @@ class TheJobConfig():
             else:
                 self.transferCmd = "mv "
         elif self.site == "KISTI":
-            if self.dest.startswith('/store/'): self.dest = 'root://cms-xrdr.sdfarm.kr:1094///cms/data/xrd/%s' % self.dest
+            if self.dest.startswith('/store/'): self.dest = 'root://cms-xrdr.sdfarm.kr:1094///xrd/%s' % self.dest
             if self.dest.startswith('root://'):
                 self.transferCmd = 'xrdcp '
             else:
