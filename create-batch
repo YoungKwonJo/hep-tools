@@ -163,11 +163,12 @@ class TheJobConfig():
 
         ## Collect secondary input files
         self.secondFiles = []
-        for f in open(secondFileList).readlines():
-            f = f.strip().strip('\',"')
-            if len(f) < 5: continue
-            if '#' == f[0] or '.root' != f[-5:]: continue
-            self.secondFiles.append(f)
+        if secondFileList:
+            for f in open(secondFileList).readlines():
+                f = f.strip().strip('\',"')
+                if len(f) < 5: continue
+                if '#' == f[0] or '.root' != f[-5:]: continue
+                self.secondFiles.append(f)
 
     def initialiseWorkspace(self):
         ## Prepare working directory
@@ -251,12 +252,10 @@ if [ $# != 1 ]; then
     exit 1
 fi
 SECTION=`printf %03d $1`
-
 if [ _$CMS_PATH == _ ]; then
   export CMS_PATH={2}
   source $CMS_PATH/cmsset_default.sh
 fi
-
 tar xzf {0}/job.tgz
 cd {1}
 scram build ProjectRename
@@ -315,12 +314,10 @@ else
     echo "JOB SECTION NUMBER IS MISSING!!!"
     exit 1
 fi
-
 if [ _$CMS_PATH == _ ]; then
   export CMS_PATH={2}
   source $CMS_PATH/cmsset_default.sh
 fi
-
 hostname
 ## Prepare workdirectory
 mkdir -p /tmp/${{USER}}/PBS_${{PBS_JOBID}}
@@ -358,8 +355,8 @@ fi""".format(self.jobDir, self.jobBase, os.environ['CMS_PATH'],self.additional_o
 for FILE in %s; do
     EXT=${FILE##*.}
     PREFIX=${FILE%%.${EXT}}
-    %s$FILE %s/${PREFIX}_${SECTION}.${EXT}
-done""" % (' '.join(self.outFileNames), self.transferCmd, self.dest)
+    %s$FILE %s/${PREFIX}_%s_${SECTION}.${EXT}
+done""" % (' '.join(self.outFileNames), self.transferCmd, self.dest,self.jobName)
         print>>fout, "echo FINISHED `date` >> %s/submit.log" % self.jobDir
         fout = None
         os.chmod(runFileName, 0755)
@@ -391,12 +388,10 @@ if [ $# != 1 ]; then
     exit 1
 fi
 SECTION=`printf %03d $1`
-
 if [ _$CMS_PATH == _ ]; then
   export CMS_PATH={2}
   source $CMS_PATH/cmsset_default.sh
 fi
-
 hostname
 tar xzf job.tgz
 cd {1}""".format(self.jobDir, self.jobBase, os.environ['CMS_PATH'],self.additional_options)
@@ -451,9 +446,7 @@ done""" % (' '.join(self.outFileNames), self.transferCmd, self.dest)
 universe   = vanilla
 arguments  = $(Process)
 requirements = OpSysMajorVer == 6
-
 log = condor.log
-
 getenv     = True
 should_transfer_files = YES
 when_to_transfer_output = ON_EXIT
