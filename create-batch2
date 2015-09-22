@@ -30,12 +30,12 @@ for aa in ds:
    ddd = "python create-batch "
    ddd+= args[0]+" "+aa['name']+" "
    ddd+= args[1]+" filelist/"+aa['name']+"_0.txt "
-   ddd+= args[2]+" 100 "
+   ddd+= args[2]+" 20 "
    if ( aa['name'].find("Double")>-1 or aa['name'].find("MuonEG")>-1 ) :
      ddd+= args[3]+" run_ntupleMakerRD_cfg.py "
    else :
      ddd+= args[3]+" run_ntupleMaker_cfg.py "
-   ddd+= args[4]+" /store/user/youngjo/Cattools/test" #+aa['name']
+   #ddd+= args[4]+" /store/user/youngjo/Cattools/test" #+aa['name']
 
    print ddd
    os.system(ddd)

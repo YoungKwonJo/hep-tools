@@ -132,12 +132,9 @@ class TheJobConfig():
             else:
                 self.transferCmd = "mv "
         elif self.site == "KISTI":
-            #if self.dest.startswith('/store/'): self.dest = 'root://cms-xrdr.sdfarm.kr:1094///cms/data/xrd/%s' % self.dest
-            if self.dest.startswith('/store/'): self.dest = 'srm://cms-se.sdfarm.kr:8443/srm/v2/server?SFN=\\xrootd/%s' % self.dest
-            #if self.dest.startswith('root://'):
-            if self.dest.startswith('srm://'):
-                #self.transferCmd = 'xrdcp '
-                self.transferCmd = 'lcg-cp -v -b -T srmv2 -D srmv2 --vo cms '
+            if self.dest.startswith('/store/'): self.dest = 'root://cms-xrdr.sdfarm.kr:1094///cms/data/xrd/%s' % self.dest
+            if self.dest.startswith('root://'):
+                self.transferCmd = 'xrdcp '
             else:
                 self.transferCmd = "" ## Output file transfer to working directory is done by CONDOR. /cms/scratch is not supporting now.
         else:
